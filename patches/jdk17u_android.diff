@@ -2330,6 +2330,29 @@ index 503a2457b..d6ac325c8 100644
  #endif
  
      if (exec_path == NULL) {
+diff --git a/src/java.base/unix/native/libnet/net_util_md.c b/src/java.base/unix/native/libnet/net_util_md.c
+index 4ec11a136..d94464722 100644
+--- a/src/java.base/unix/native/libnet/net_util_md.c
++++ b/src/java.base/unix/native/libnet/net_util_md.c
+@@ -150,6 +150,10 @@ jint  IPv6_supported()
+         }
+     }
+
++    /**
++     * Android hack: skip /proc/net/ check
++     */
++#ifndef __ANDROID__
+     /**
+      * Linux - check if any interface has an IPv6 address.
+      * Don't need to parse the line - we just need an indication.
+@@ -171,6 +175,7 @@ jint  IPv6_supported()
+             return JNI_TRUE;
+         }
+     }
++#endif
+ #endif
+
+     /*
 diff --git a/src/java.base/unix/native/libnet/net_util_md.h b/src/java.base/unix/native/libnet/net_util_md.h
 index 68835987b..eafd4509e 100644
 --- a/src/java.base/unix/native/libnet/net_util_md.h
